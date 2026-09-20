@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Trade Counter</title>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: fit-content;
+        height: fit-content;
+        background: transparent;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    .counter {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 5px 8px;
+        background: rgba(25, 25, 25, 0.85);
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .plus {
+        color: #20d879;
+        cursor: pointer;
+    }
+
+    .minus {
+        color: #ff4545;
+        cursor: pointer;
+    }
+
+    .plus:hover,
+    .minus:hover {
+        opacity: 0.7;
+    }
+
+    .reset {
+        text-align: center;
+        font-size: 9px;
+        color: #777;
+        cursor: pointer;
+        margin-top: 1px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="counter">
+    <div class="plus" onclick="addPlus()">🟢 + <span id="plus">0</span></div>
+    <div class="minus" onclick="addMinus()">🔴 − <span id="minus">0</span></div>
+</div>
+
+<div class="reset" onclick="resetCounter()">↻</div>
+
+<script>
+let plus = Number(localStorage.getItem("tradePlus")) || 0;
+let minus = Number(localStorage.getItem("tradeMinus")) || 0;
+
+function update() {
+    document.getElementById("plus").textContent = plus;
+    document.getElementById("minus").textContent = minus;
+}
+
+function addPlus() {
+    plus++;
+    localStorage.setItem("tradePlus", plus);
+    update();
+}
+
+function addMinus() {
+    minus++;
+    localStorage.setItem("tradeMinus", minus);
+    update();
+}
+
+function resetCounter() {
+    if (confirm("Скинути лічильник?")) {
+        plus = 0;
+        minus = 0;
+        localStorage.setItem("tradePlus", 0);
+        localStorage.setItem("tradeMinus", 0);
+        update();
+    }
+}
+
+update();
+</script>
+
+</body>
+</html>
